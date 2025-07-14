@@ -1,215 +1,418 @@
-const ramos = [
-  // PRIMER AÑO
-  // I Semestre
-  { semestre: "I Semestre", nombre: "Química General", abre: ["Bioquímica", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "I Semestre", nombre: "Biología Celular", abre: ["Histología", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "I Semestre", nombre: "Zoología", abre: ["Parasitología", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "I Semestre", nombre: "Inglés I", abre: ["Inglés II", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "I Semestre", nombre: "Ecología", abre: ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "I Semestre", nombre: "Rol del Médico Veterinario", abre: ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
+// Definición de requisitos y a qué ramos abre cada uno.
+// Para hacer rápido el desbloqueo, definimos un mapa de dependencias (quién depende de quién)
 
-  // II Semestre
-  { semestre: "II Semestre", nombre: "Bioquímica", abre: ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "II Semestre", nombre: "Histología", abre: ["Embriología", "Patología General", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "II Semestre", nombre: "Anatomía Animal I", abre: ["Anatomía Animal II", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "II Semestre", nombre: "Zootecnia", abre: ["Nutrición y Alimentación", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "II Semestre", nombre: "Etología y Bienestar Animal", abre: ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "II Semestre", nombre: "Electivo Antropológico Cristiano", abre: ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
+const dependencias = {
+  "Química General": [
+    "Bioquímica",
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Biología Celular": [
+    "Histología",
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Zoología": [
+    "Parasitología",
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Inglés I": [
+    "Inglés I (2do)",
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Ecología": [
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Rol del Médico Veterinario": [
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
 
-  // SEGUNDO AÑO
-  // III Semestre
-  { semestre: "III Semestre", nombre: "Fisiología Animal I", abre: ["Fisiología Animal II", "Fisiopatología I", "Farmacología", "Evaluación de Ciclo Inicial", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "III Semestre", nombre: "Embriología", abre: ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "III Semestre", nombre: "Anatomía Animal II", abre: ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "III Semestre", nombre: "Microbiología General", abre: ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "III Semestre", nombre: "Reproducción y Genética", abre: ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "III Semestre", nombre: "Inglés II", abre: ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "III Semestre", nombre: "Electivo Diversidad I", abre: ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
+  "Bioquímica": [
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Histología": [
+    "Embriología",
+    "Patología General",
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Anatomía Animal I": [
+    "Anatomía Animal II",
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Zootecnia": [
+    "Nutrición y Alimentación",
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Etología y Bienestar Animal": [
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Electivo Antropológico Cristiano": [
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
 
-  // IV Semestre
-  { semestre: "IV Semestre", nombre: "Fisiología Animal II", abre: ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "IV Semestre", nombre: "Patología General", abre: ["Semiotecnia", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "IV Semestre", nombre: "Nutrición y Alimentación", abre: ["Producción de Aves y Cerdos", "Producción de Rumiantes Menores", "Producción Bovina", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "IV Semestre", nombre: "Epidemiología", abre: ["Vigilancia Epidemiológica", "Gestión Ambiental", "Tecnología de Alimentos e Inocuidad", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "IV Semestre", nombre: "Contexto Social", abre: ["Negocios y Emprendimiento", "Desarrollo Rural", "Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "IV Semestre", nombre: "Parasitología", abre: ["Evaluación de Ciclo Inicial", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
+  "Fisiología Animal I": [
+    "Fisiología Animal II",
+    "Fisiopatología I",
+    "Farmacología",
+    "Evaluación de Ciclo Inicial",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Embriología": [
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Anatomía Animal II": [
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Microbiología General": [
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Reproducción y Genética": [
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Inglés I (2do)": [
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Electivo Diversidad I": [
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
 
-  // TERCER AÑO
-  // V Semestre
-  { semestre: "V Semestre", nombre: "Fisiopatología I", abre: ["Fisiopatología II", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "V Semestre", nombre: "Farmacología", abre: ["Anestesiología y Manejo del Dolor", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "V Semestre", nombre: "Enfermedades Infecciosas", abre: ["Medicina de Pequeños Animales", "Medicina de Rumiantes", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "V Semestre", nombre: "Producción de Aves y Cerdos", abre: ["Proyecto Productivo", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "V Semestre", nombre: "Producción de Rumiantes Menores", abre: ["Proyecto Productivo", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "V Semestre", nombre: "Electivo Teológico", abre: ["Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "V Semestre", nombre: "Evaluación de Ciclo Inicial", abre: ["Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
+  "Fisiología Animal II": [
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Patología General": [
+    "Evaluación de Ciclo Inicial",
+    "Semiotecnia",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Nutrición y Alimentación": [
+    "Producción de Aves y Cerdos",
+    "Producción de Rumiantes Menores",
+    "Producción Bovina",
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Epidemiología": [
+    "Evaluación de Ciclo Inicial",
+    "Vigilancia Epidemiológica",
+    "Gestión Ambiental",
+    "Tecnología de Alimentos e Inocuidad",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Contexto Social": [
+    "Negocios y Emprendimiento",
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+    "Desarrollo Rural",
+  ],
+  "Parasitología": [
+    "Evaluación de Ciclo Inicial",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
 
-  // VI Semestre
-  { semestre: "VI Semestre", nombre: "Fisiopatología II", abre: ["Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "VI Semestre", nombre: "Ictiopatología", abre: ["Producción Acuícola", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "VI Semestre", nombre: "Producción Bovina", abre: ["Proyecto Productivo", "Tecnología de Alimentos e Inocuidad", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "VI Semestre", nombre: "Negocios y Emprendimiento", abre: ["Desarrollo Rural", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "VI Semestre", nombre: "Semiotecnia", abre: ["Técnicas Diagnósticas", "Anestesiología y Manejo del Dolor", "Metodología de Investigación", "Electivo Disciplinar I", "Electivo Disciplinar II"] },
-  { semestre: "VI Semestre", nombre: "Electivo Diversidad II", abre: ["Metodología de Investigación"] },
+  "Fisiopatología I": [
+    "Fisiopatología II",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Farmacología": [
+    "Anestesiología y Manejo del Dolor",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Enfermedades Infecciosas": [
+    "Medicina de Pequeños Animales",
+    "Medicina de Rumiantes",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Producción de Aves y Cerdos": [
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+    "Proyecto Productivo",
+  ],
+  "Producción de Rumiantes Menores": [
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+    "Proyecto Productivo",
+  ],
+  "Electivo Teológico": [
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Evaluación de Ciclo Inicial": [
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
 
-  // CUARTO AÑO
-  // VII Semestre
-  { semestre: "VII Semestre", nombre: "Medicina de Pequeños Animales", abre: ["Internado Pequeños Animales I", "Metodología de Investigación"] },
-  { semestre: "VII Semestre", nombre: "Técnicas Diagnósticas", abre: ["Metodología de Investigación"] },
-  { semestre: "VII Semestre", nombre: "Anestesiología y Manejo del Dolor", abre: ["Cirugía I", "Metodología de Investigación"] },
-  { semestre: "VII Semestre", nombre: "Producción Acuícola", abre: ["Proyecto Productivo", "Metodología de Investigación"] },
-  { semestre: "VII Semestre", nombre: "Vigilancia Epidemiológica", abre: ["Salud Pública", "Medicina de la Conservación", "Metodología de Investigación"] },
-  { semestre: "VII Semestre", nombre: "Gestión Ambiental", abre: ["Metodología de Investigación"] },
+  "Fisiopatología II": [
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Ictiopatología": [
+    "Producción Acuícola",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Producción Bovina": [
+    "Tecnología de Alimentos e Inocuidad",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+    "Proyecto Productivo",
+  ],
+  "Negocios y Emprendimiento": [
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+    "Desarrollo Rural",
+  ],
+  "Semiotecnia": [
+    "Técnicas Diagnósticas",
+    "Anestesiología y Manejo del Dolor",
+    "Metodología de Investigación",
+    "Electivo Disciplinar I",
+    "Electivo Disciplinar II",
+  ],
+  "Electivo Diversidad II": [
+    "Metodología de Investigación",
+  ],
 
-  // VIII Semestre
-  { semestre: "VIII Semestre", nombre: "Medicina de Rumiantes", abre: ["Internado Animales Mayores I"] },
-  { semestre: "VIII Semestre", nombre: "Medicina de Equinos", abre: ["Internado Animales Mayores I"] },
-  { semestre: "VIII Semestre", nombre: "Cirugía I", abre: ["Cirugía II"] },
-  { semestre: "VIII Semestre", nombre: "Metodología de Investigación" },
-  { semestre: "VIII Semestre", nombre: "Tecnología de Alimentos e Inocuidad" },
-  { semestre: "VIII Semestre", nombre: "Electivo Disciplinar I" },
+  "Medicina de Pequeños Animales": [
+    "Internado Pequeños Animales I",
+    "Metodología de Investigación",
+  ],
+  "Técnicas Diagnósticas": [
+    "Metodología de Investigación",
+  ],
+  "Anestesiología y Manejo del Dolor": [
+    "Cirugía I",
+    "Metodología de Investigación",
+  ],
+  "Producción Acuícola": [
+    "Metodología de Investigación",
+    "Proyecto Productivo",
+  ],
+  "Vigilancia Epidemiológica": [
+    "Medicina de la Conservación",
+    "Salud Pública",
+    "Metodología de Investigación",
+  ],
+  "Gestión Ambiental": [
+    "Metodología de Investigación",
+  ],
 
-  // QUINTO AÑO
-  // IX Semestre
-  { semestre: "IX Semestre", nombre: "Internado Pequeños Animales I", abre: ["Internado Pequeños Animales II"] },
-  { semestre: "IX Semestre", nombre: "Proyecto Productivo" },
-  { semestre: "IX Semestre", nombre: "Internado Animales Mayores I", abre: ["Internado Animales Mayores II"] },
-  { semestre: "IX Semestre", nombre: "Cirugía II" },
-  { semestre: "IX Semestre", nombre: "Desarrollo Rural" },
-  { semestre: "IX Semestre", nombre: "Electivo Diversidad III" },
+  "Medicina de Rumiantes": [
+    "Internado Animales Mayores I",
+  ],
+  "Medicina de Equinos": [
+    "Internado Animales Mayores I",
+  ],
+  "Cirugía I": [
+    "Cirugía II",
+  ],
 
-  // X Semestre
-  { semestre: "X Semestre", nombre: "Internado Pequeños Animales II" },
-  { semestre: "X Semestre", nombre: "Internado Animales Mayores II" },
-  { semestre: "X Semestre", nombre: "Salud Pública" },
-  { semestre: "X Semestre", nombre: "Medicina de la Conservación" },
-  { semestre: "X Semestre", nombre: "Ética Profesional" },
-  { semestre: "X Semestre", nombre: "Electivo Disciplinar II" }
-];
+  // Los últimos sin dependencias
+  "Metodología de Investigación": [],
+  "Tecnología de Alimentos e Inocuidad": [],
+  "Electivo Disciplinar I": [],
+  "Internado Pequeños Animales I": [
+    "Internado Pequeños Animales II",
+  ],
+  "Proyecto Productivo": [],
+  "Internado Animales Mayores I": [
+    "Internado Animales Mayores II",
+  ],
+  "Cirugía II": [],
+  "Desarrollo Rural": [],
+  "Electivo Diversidad III": [],
+  "Internado Pequeños Animales II": [],
+  "Internado Animales Mayores II": [],
+  "Salud Pública": [],
+  "Medicina de la Conservación": [],
+  "Ética Profesional": [],
+  "Electivo Disciplinar II": [],
+};
 
-// Estado de cada ramo: true = aprobado, false = no aprobado
-const estadoRamos = {};
+// Guardamos el estado aprobado en localStorage para persistencia
+const STORAGE_KEY = "malla-aprobados";
 
-// Inicializar estado de ramos como no aprobados
-ramos.forEach(ramo => {
-  estadoRamos[ramo.nombre] = false;
-});
+document.addEventListener("DOMContentLoaded", () => {
+  const botones = document.querySelectorAll(".ramo");
 
-// Función para verificar si un ramo está desbloqueado (todos sus prerrequisitos aprobados)
-function estaDesbloqueado(nombre) {
-  // Un ramo está bloqueado si alguno de sus prerrequisitos no está aprobado
-  // Para eso, buscamos los ramos que abren a este ramo
-  const prerrequisitos = ramos.filter(ramo => ramo.abre && ramo.abre.includes(nombre));
-  return prerrequisitos.every(prer => estadoRamos[prer.nombre] === true);
-}
+  // Cargamos estado previo
+  let aprobados = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
-// Función para actualizar la visualización de un ramo
-function actualizarRamo(nombre) {
-  const elemento = document.getElementById(nombre);
-  if (!elemento) return;
-
-  if (estadoRamos[nombre]) {
-    elemento.classList.add('aprobado');
-    elemento.classList.remove('bloqueado');
-  } else {
-    if (estaDesbloqueado(nombre)) {
-      elemento.classList.remove('bloqueado');
-    } else {
-      elemento.classList.add('bloqueado');
-    }
-    elemento.classList.remove('aprobado');
+  // Función para guardar estado
+  function guardarEstado() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(aprobados));
   }
-}
 
-// Función para desbloquear los ramos que depende del ramo aprobado
-function desbloquearDependientes(nombre) {
-  const ramo = ramos.find(r => r.nombre === nombre);
-  if (!ramo || !ramo.abre) return;
-
-  ramo.abre.forEach(ramoAbierto => {
-    if (estaDesbloqueado(ramoAbierto)) {
-      const elemento = document.getElementById(ramoAbierto);
-      if (elemento) {
-        elemento.classList.remove('bloqueado');
+  // Función para actualizar botones desbloqueados segun requisitos aprobados
+  function actualizarDesbloqueados() {
+    // Empezamos con desbloqueados vacíos excepto los del primer semestre
+    botones.forEach((btn) => {
+      const nombre = btn.dataset.nombre;
+      if (aprobados.includes(nombre)) {
+        btn.classList.add("aprobado");
+        btn.classList.remove("bloqueado");
+        btn.classList.add("desbloqueado");
+        btn.disabled = false;
+      } else {
+        btn.classList.remove("aprobado");
       }
+    });
+
+    // Desbloqueamos aquellos que tienen TODOS sus requisitos aprobados
+    botones.forEach((btn) => {
+      const nombre = btn.dataset.nombre;
+      if (!aprobados.includes(nombre)) {
+        // Buscamos los ramos que abren este ramo
+        // Si hay al menos 1 requisito no aprobado, bloqueamos
+        let requisitosAprobados = true;
+
+        // Para saber los requisitos, buscamos todos los ramos que abren este ramo
+        // Pero solo tenemos mapa dependencias del ramo->abre. Necesitamos el inverso.
+        // Construimos un mapa inverso (ramo -> lista de requisitos)
+      }
+    });
+
+    // Construimos mapa inverso (ramo -> requisitos)
+    const requisitosPorRamo = {};
+
+    // Inicializamos vacío para todos
+    botones.forEach((btn) => {
+      requisitosPorRamo[btn.dataset.nombre] = [];
+    });
+
+    // Llenamos la lista con base en dependencias
+    for (const [ramo, abreLista] of Object.entries(dependencias)) {
+      abreLista.forEach((abreRamo) => {
+        if (requisitosPorRamo[abreRamo]) {
+          requisitosPorRamo[abreRamo].push(ramo);
+        }
+      });
     }
-  });
-}
 
-// Función para manejar click en un ramo
-function toggleAprobado(nombre) {
-  const elemento = document.getElementById(nombre);
-  if (!elemento) return;
+    // Ahora sí, evaluamos cada ramo
+    botones.forEach((btn) => {
+      const nombre = btn.dataset.nombre;
 
-  // No permitir aprobar si está bloqueado
-  if (elemento.classList.contains('bloqueado')) return;
+      if (!aprobados.includes(nombre)) {
+        const reqs = requisitosPorRamo[nombre] || [];
 
-  // Alternar estado aprobado/no aprobado
-  estadoRamos[nombre] = !estadoRamos[nombre];
-  actualizarRamo(nombre);
-
-  if (estadoRamos[nombre]) {
-    desbloquearDependientes(nombre);
-  } else {
-    // Si desaprueba, desaprobar y bloquear los dependientes
-    ramos.forEach(ramo => {
-      if (ramo.abre && ramo.abre.includes(nombre)) {
-        estadoRamos[ramo.nombre] = false;
-        actualizarRamo(ramo.nombre);
+        if (reqs.length === 0) {
+          // No tiene requisitos, desbloqueado
+          btn.classList.remove("bloqueado");
+          btn.classList.add("desbloqueado");
+          btn.disabled = false;
+        } else {
+          // Si TODOS los requisitos están aprobados, desbloqueado
+          const todosAprobados = reqs.every((r) => aprobados.includes(r));
+          if (todosAprobados) {
+            btn.classList.remove("bloqueado");
+            btn.classList.add("desbloqueado");
+            btn.disabled = false;
+          } else {
+            btn.classList.add("bloqueado");
+            btn.classList.remove("desbloqueado");
+            btn.disabled = true;
+          }
+        }
       }
     });
   }
-}
 
-// Función para crear tarjetas dinámicamente en el contenedor
-function crearTarjetas() {
-  const contenedor = document.getElementById('contenedorRamos');
-  if (!contenedor) return;
+  // Inicializamos el estado visual al cargar
+  actualizarDesbloqueados();
 
-  // Agrupar ramos por semestre
-  const semestres = {};
-  ramos.forEach(ramo => {
-    if (!semestres[ramo.semestre]) semestres[ramo.semestre] = [];
-    semestres[ramo.semestre].push(ramo);
-  });
+  botones.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const nombre = btn.dataset.nombre;
 
-  // Vaciar contenedor
-  contenedor.innerHTML = '';
-
-  // Crear elementos HTML
-  Object.keys(semestres).forEach(semestre => {
-    // Crear título semestre
-    const tituloSemestre = document.createElement('h2');
-    tituloSemestre.textContent = semestre;
-    contenedor.appendChild(tituloSemestre);
-
-    // Crear contenedor de ramos
-    const divSemestre = document.createElement('div');
-    divSemestre.classList.add('semestre');
-
-    semestres[semestre].forEach(ramo => {
-      const divRamo = document.createElement('div');
-      divRamo.classList.add('ramo');
-      divRamo.id = ramo.nombre;
-      divRamo.textContent = ramo.nombre;
-      divRamo.title = `Abre: ${ramo.abre ? ramo.abre.join(', ') : 'Ninguno'}`;
-
-      // Inicialmente se bloquea si no está desbloqueado
-      if (!estaDesbloqueado(ramo.nombre)) {
-        divRamo.classList.add('bloqueado');
+      if (aprobados.includes(nombre)) {
+        // Si ya estaba aprobado, al volver a clickear lo desaprueba
+        aprobados = aprobados.filter((r) => r !== nombre);
+      } else {
+        aprobados.push(nombre);
       }
 
-      // Evento click para toggle aprobado
-      divRamo.addEventListener('click', () => toggleAprobado(ramo.nombre));
-
-      divSemestre.appendChild(divRamo);
+      guardarEstado();
+      actualizarDesbloqueados();
     });
-
-    contenedor.appendChild(divSemestre);
   });
-}
-
-// Inicializar al cargar la página
-window.addEventListener('DOMContentLoaded', () => {
-  crearTarjetas();
 });
