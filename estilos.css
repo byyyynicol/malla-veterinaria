@@ -12,23 +12,27 @@ h1 {
 }
 
 .malla {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  max-width: 1200px;
-  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr); /* 10 columnas para 10 semestres */
+  gap: 20px;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 20px;
 }
 
 .semestre {
   background: #ffe4f5;
   border-left: 6px solid #d63384;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
+  min-width: 200px;
 }
 
 .semestre h2 {
   margin-top: 0;
+  text-align: center;
   color: #c71585;
+  font-size: 1.1em;
 }
 
 .ramo {
@@ -60,7 +64,8 @@ h1 {
 }
 
 .requisitos {
-  font-size: 0.9em;
+  font-size: 0.8em;
   color: #666;
-  margin-top: 5px;
+  margin-top: 4px;
+  font-style: italic;
 }
